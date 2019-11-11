@@ -22,8 +22,7 @@ var minRemoveToMakeValid = (s, t=[], del=new Set(), stack=[]) => {
                 stack.pop();
         }
     }
-    if (stack.length > 0)
-        stack.forEach(i => del.add(i));
+    stack.forEach(i => del.add(i));
     for (let i=0; i < s.length; ++i)
         if (!del.has(i))
             t.push(s[i]);
