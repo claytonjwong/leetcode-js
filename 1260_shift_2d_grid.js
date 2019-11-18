@@ -30,17 +30,13 @@ var shiftGrid = (A, k, seq=[]) => {
         for (let j=0; j < N; ++j)
             seq.push(A[i][j]);
     let shifted = seq.slice(-k).concat(seq.slice(0, M*N - k));
-    let i = 0,
-        j = 0;
     let ans = [...Array(M)].map(() => Array(N));
-    for (let num of shifted) {
-        ans[i][j] = num;
-        if (++j == N)
-            ++i, j=0;
-    }
+    let f = Math.floor;
+    for (let i in shifted)
+        ans[f(i / N)][i % N] = shifted[i];
     return ans;
 };
 // let ans = shiftGrid([[1],[2],[3],[4],[7],[6], [5]], 23);
-let ans = shiftGrid([[100]], 1);
+let ans = shiftGrid([[1,2,3],[4,5,6],[7,8,9]], 1);
 for (let row of ans)
     console.log(row);
