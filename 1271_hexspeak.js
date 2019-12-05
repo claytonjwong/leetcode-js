@@ -6,7 +6,7 @@
  */ 
 var toHexspeak = str => {
     let hex = parseInt(str).toString(16).toUpperCase();
-    let ans = hex.split('').map(c => c == '0' ? 'O' : c == '1' ? 'I' : c).join('');
+    let ans = [...hex].map(c => c == '0' ? 'O' : c == '1' ? 'I' : c).join('');
     return /^[A-Z]+$/.test(ans) ? ans : "ERROR";
 };
 console.log(toHexspeak("747823223228")); // "AEIDBCDIBC"
