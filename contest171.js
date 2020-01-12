@@ -10,7 +10,7 @@
  * A1: https://leetcode.com/problems/convert-integer-to-the-sum-of-two-no-zero-integers/discuss/477795/Javascript-and-C%2B%2B-solutions
  * 
  * Q2: https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/
- * A2: https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/discuss/477794/Javascript-and-C%2B%2B-solutions
+ * A2: https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/discuss/478305/Javascript-and-C%2B%2B-solutions
  * 
  * Q3: https://leetcode.com/problems/number-of-operations-to-make-network-connected/
  * A3: https://leetcode.com/problems/number-of-operations-to-make-network-connected/discuss/477783/Javascript-and-C%2B%2B-solutions
@@ -89,6 +89,27 @@ let minFlips = (a, b, c, cnt = 0) => {
     }
     return cnt;
 };
+*/
+/*
+let minFlips = (a, b, c, cnt = 0) => {
+    let isSet = (x, i) => x & (1 << i) ? 1 : 0;
+    for (let i = 0; i <= 31; ++i)
+        if (isSet(c, i))
+            cnt += !isSet(a, i) && !isSet(b, i);
+        else
+            cnt += isSet(a, i),
+            cnt += isSet(b, i);
+    return cnt;
+};
+*/
+/*
+let minFlips = (a, b, c, cnt = 0) => {
+    let isSet = (x, i) => x & (1 << i) ? 1 : 0;
+    for (let i = 0; i <= 31; ++i)
+        cnt += isSet(c, i) ? !isSet(a, i) && !isSet(b, i) : isSet(a, i) + isSet(b, i);
+    return cnt;
+};
+
 console.log(minFlips(2, 6, 5));
 console.log(minFlips(4, 2, 7));
 console.log(minFlips(1, 2, 3));
