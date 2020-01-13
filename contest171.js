@@ -56,17 +56,17 @@ let getNoZeroIntegers = (x, i = 1) => {
  */
 /*
 let minFlips = (a, b, c, cnt = 0) => {
-    let isSet = (x, i) => x & (1 << i);
+    let bit = (x, i) => x & (1 << i);
     for (let i = 0; i <= 31; ++i) {
-        let bit = isSet(c, i);
+        let bit = bit(c, i);
         if (bit) {
-            if (isSet(a, i) || isSet(b, i))
+            if (bit(a, i) || bit(b, i))
                 continue;
             ++cnt;
         } else {
             let on = 0;
-            if (isSet(a, i)) ++on;
-            if (isSet(b, i)) ++on;
+            if (bit(a, i)) ++on;
+            if (bit(b, i)) ++on;
             cnt += on;
         }
     }
@@ -75,15 +75,15 @@ let minFlips = (a, b, c, cnt = 0) => {
 */
 /*
 let minFlips = (a, b, c, cnt = 0) => {
-    let isSet = (x, i) => x & (1 << i);
+    let bit = (x, i) => x & (1 << i);
     for (let i = 0; i <= 31; ++i) {
-        if (isSet(c, i)) {
-            if (!isSet(a, i) && !isSet(b, i))
+        if (bit(c, i)) {
+            if (!bit(a, i) && !bit(b, i))
                 ++cnt;
         } else {
             let on = 0;
-            if (isSet(a, i)) ++on;
-            if (isSet(b, i)) ++on;
+            if (bit(a, i)) ++on;
+            if (bit(b, i)) ++on;
             cnt += on;
         }
     }
@@ -92,21 +92,21 @@ let minFlips = (a, b, c, cnt = 0) => {
 */
 /*
 let minFlips = (a, b, c, cnt = 0) => {
-    let isSet = (x, i) => x & (1 << i) ? 1 : 0;
+    let bit = (x, i) => x & (1 << i) ? 1 : 0;
     for (let i = 0; i <= 31; ++i)
-        if (isSet(c, i))
-            cnt += !isSet(a, i) && !isSet(b, i);
+        if (bit(c, i))
+            cnt += !bit(a, i) && !bit(b, i);
         else
-            cnt += isSet(a, i),
-            cnt += isSet(b, i);
+            cnt += bit(a, i),
+            cnt += bit(b, i);
     return cnt;
 };
 */
 /*
 let minFlips = (a, b, c, cnt = 0) => {
-    let isSet = (x, i) => x & (1 << i) ? 1 : 0;
+    let bit = (x, i) => x & (1 << i) ? 1 : 0;
     for (let i = 0; i <= 31; ++i)
-        cnt += isSet(c, i) ? !isSet(a, i) && !isSet(b, i) : isSet(a, i) + isSet(b, i);
+        cnt += bit(c, i) ? !bit(a, i) && !bit(b, i) : bit(a, i) + bit(b, i);
     return cnt;
 };
 
