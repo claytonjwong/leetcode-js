@@ -2,7 +2,7 @@
  * 51. N-Queens
  *
  * Q: https://leetcode.com/problems/n-queens/
- * A:
+ * A: https://leetcode.com/problems/n-queens/discuss/480335/Javascript-and-C%2B%2B-solutions
  */
 
 /**
