@@ -11,23 +11,20 @@
  * @return {number[]}
  */
 let numSmallerByFrequency = (queries, words) => {
-    let f = s => {
+    let f = (s, i = 1) => {
         let A = s.split('').sort();
-        let i = 1;
         while (i < A.length && A[i - 1] == A[i])
             ++i;
         return i;
     }
     let A = words.map(s => f(s)).sort((a, b) => a - b), N = A.length;
     let upper_bound = x => {
-        let lo = 0, hi = A.length - 1, mid = Infinity;
+        let lo = 0, hi = A.length - 1
         while (lo <= hi) {
             let mid = Math.ceil((lo + hi) / 2)
-            if (x == A[mid])
-                return mid + 1;
             if (x < A[mid])
                 hi = mid - 1;
-            if (x > A[mid])
+            else
                 lo = mid + 1;
         }
         return hi + 1;
