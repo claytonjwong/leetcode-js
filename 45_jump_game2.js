@@ -24,11 +24,10 @@
 //     return hops;
 // };
 
-let jump = (A, seen = new Set([0]), hops = 0) => {
-    let N = A.length, reach = A[0], next = -1;
+let jump = A => {
+    let N = A.length, hops = 0, reach = A[0], next = -1;
     for (let i = 1; i < N; ++hops, reach = next)
         for (next = reach; i <= Math.min(reach, N - 1); ++i)
-            if (!seen.has(i))
-                next = Math.max(next, i + A[i]), seen.add(i);
+            next = Math.max(next, i + A[i]);
     return hops;
 };
