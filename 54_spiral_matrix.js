@@ -8,7 +8,7 @@
  let spiralOrder = (A, i = 0, j = 0, seen = new Set(), ans = []) => {
     let M = A.length,
         N = M == 0 ? 0 : A[0].length;
-    let dir = 0, dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+    let dir = 0, dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]]; // clockwise: ( 👉, 👇, 👈, 👆 )
     while (seen.size < M * N) {
         if (!seen.has(`${i},${j}`))
             ans.push(A[i][j]),
