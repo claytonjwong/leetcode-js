@@ -69,7 +69,7 @@ if still tie and at last position, then sort lexicographically and return min
 //             if (best.size == 0)
 //                 next = Object.entries(m[k]);
 //             else
-//                 next = Object.entries(m[k]).filter(entry => best.has(entry[0]));
+//                 next = [Object.entries(m[k]).filter(entry => best.has(entry[0]))];
 //             best = new Set();
 //             for (let [c, cnt] of next) {
 //                 if (max == cnt) {
@@ -92,77 +92,66 @@ if still tie and at last position, then sort lexicographically and return min
 //     }
 //     return ans.join('');
 // };
-// // console.log(rankTeams(["ABC","ACB","ABC","ACB","ACB"]));
-// console.log(rankTeams(["WXYZ","XYZW"])); // algo is incorrect!
-// // console.log(rankTeams(["ZMNAGUEDSJYLBOPHRQICWFXTVK"]));
-// // console.log(rankTeams(["BCA","CAB","CBA","ABC","ACB","BAC"]));
-// // console.log(rankTeams(["M","M","M","M"]));
 
 
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
+// console.log(rankTeams(["ABC","ACB","ABC","ACB","ACB"]));
+// console.log(rankTeams(["WXYZ","XYZW"]));
+// console.log(rankTeams(["ZMNAGUEDSJYLBOPHRQICWFXTVK"]));
+// console.log(rankTeams(["BCA","CAB","CBA","ABC","ACB","BAC"]));
+// console.log(rankTeams(["M","M","M","M"]));
+// console.log(rankTeams(["AXYB","AYXB","AXYB","AYXB"]));
 
-class ListNode {
-    constructor(val) {
-        this.val = val;
-        this.next = null;
-    }
-}
 
-class TreeNode {
-    constructor(val) {
-        this.val = val;
-        this.left = this.right = null;
-    }
-}
 
-/**
- * @param {ListNode} head
- * @param {TreeNode} root
- * @return {boolean}
- */
+// class ListNode {
+//     constructor(val) {
+//         this.val = val;
+//         this.next = null;
+//     }
+// }
 
-//
-// incorrect algorithm -- think through recursion better to avoid inifite loop or wrong answer
-//
-let isSubPath = (head, root) => {
-    let go = (tail, root) => {
-        if (!root)
-            return false;
-        let ok = false;
-        if (root.val == tail.val) {
-            if (!tail.next)
-                return true;
-            ok |= go(tail.next, root.left);
-            ok |= go(tail.next, root.right);
-        }
-        if (root.val == head.val) {
-            ok |= go(head.next, root.left);
-            ok |= go(head.next, root.right);
-        } else {
-            ok |= go(head, root);
-        }
-        return ok;
-    };
-    return go(head, root);
-};
-let root = new TreeNode(1);
-root.left = new TreeNode(5);
-root.right = new TreeNode(2);
-root.right.left = new TreeNode(3);
-let head = new ListNode(1);
-head.next = new ListNode(2);
-head.next.next = new ListNode(3);
-console.log(isSubPath(head, root));
+// class TreeNode {
+//     constructor(val) {
+//         this.val = val;
+//         this.left = this.right = null;
+//     }
+// }
+
+// /**
+//  * @param {ListNode} head
+//  * @param {TreeNode} root
+//  * @return {boolean}
+//  */
+
+// //
+// // incorrect algorithm -- think through recursion better to avoid inifite loop or wrong answer
+// //
+// let isSubPath = (head, root) => {
+//     let go = (tail, root) => {
+//         if (!root)
+//             return false;
+//         let ok = false;
+//         if (root.val == tail.val) {
+//             if (!tail.next)
+//                 return true;
+//             ok |= go(tail.next, root.left);
+//             ok |= go(tail.next, root.right);
+//         }
+//         if (root.val == head.val) {
+//             ok |= go(head.next, root.left);
+//             ok |= go(head.next, root.right);
+//         } else {
+//             ok |= go(head, root);
+//         }
+//         return ok;
+//     };
+//     return go(head, root);
+// };
+// let root = new TreeNode(1);
+// root.left = new TreeNode(5);
+// root.right = new TreeNode(2);
+// root.right.left = new TreeNode(3);
+// let head = new ListNode(1);
+// head.next = new ListNode(2);
+// head.next.next = new ListNode(3);
+// console.log(isSubPath(head, root));
