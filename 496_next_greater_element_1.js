@@ -11,20 +11,16 @@
  * @return {number[]}
  */
 
-let nextGreaterElement = (A, B, m = {}) => {
+let nextGreaterElement = (A, B, m = {}, s = []) => {
     let N = B.length;
-    if (N == 0)
-        return [];
-    for (let i = 0; i + 1 < N; ++i) {
-        let j = i + 1;
-        for (; j < N && B[i] > B[j]; ++j);
-        if (j == N)
+    for (let i = N - 1; i >= 0; --i) {
+        while (s.length > 0 && B[i] > s[s.length - 1])
+            s.pop();
+        if (s.length == 0)
             m[B[i]] = -1;
         else
-            m[B[i]] = B[j];
+            m[B[i]] = s[s.length - 1];
+        s.push(B[i]);
     }
-    m[B[N - 1]] = -1;
     return [...A].map(x => m[x]);
 };
-
-// TODO: use a stack to generate the map more efficiently in O(N) time
