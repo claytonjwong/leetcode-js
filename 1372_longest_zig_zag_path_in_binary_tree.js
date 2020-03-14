@@ -6,17 +6,17 @@
  */
 
 let longestZigZag = (root, left = 0xABC, right = 0xDEF, max = 0) => {
-    let go = (root, from = 0, val = 0) => {
-        max = Math.max(max, val);
+    let go = (root, from = 0, len = 0) => {
+        max = Math.max(max, len);
         if (root.left) {
             if (from == right)
-                go(root.left, left, 1 + val); // case 2: (from 👉) -> (to 👈)
+                go(root.left, left, 1 + len); // case 2: (from 👉) -> (to 👈)
             else
                 go(root.left, left, 1);
         }
         if (root.right) {
             if (from == left)
-                go(root.right, right, 1 + val); // case 1: (to 👉) <- (from 👈)
+                go(root.right, right, 1 + len); // case 1: (to 👉) <- (from 👈)
             else
                 go(root.right, right, 1);
         }
