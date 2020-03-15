@@ -1,10 +1,17 @@
 /*
  * https://leetcode.com/contest/weekly-contest-180
  *
- * Rank           Name            Score    Finish Time     Q1 (3)    Q2 (4)       Q3 (4)    Q4 (6)
- * 2160 / 6333    claytonjwong 	  11       1:02:28         0:06:31   0:57:28 *1   0:23:30
+ * Rank            Name            Score    Finish Time     Q1 (3)    Q2 (4)       Q3 (4)    Q4 (6)
+ * 2895 / 10047    claytonjwong    11       1:02:28         0:06:31   0:57:28 *1   0:23:30
  */
 
+
+/*
+ * 1380. Lucky Numbers in a Matrix
+ *
+ * Q: https://leetcode.com/problems/lucky-numbers-in-a-matrix/
+ * A: https://leetcode.com/problems/lucky-numbers-in-a-matrix/discuss/539707/Javascript-and-C%2B%2B-solutions
+ */
 let luckyNumbers  = (A, ans = []) => {
     let M = A.length,
         N = A[0].length;
@@ -16,7 +23,7 @@ let luckyNumbers  = (A, ans = []) => {
             max[j] = Math.max(max[j], A[i][j]);
     for (let i = 0; i < M; ++i)
         for (let j = 0; j < N; ++j)
-            if (A[i][j] == min[i] && A[i][j] == max[j])
+            if (min[i] == max[j]) // 🍀 lucky number 🍀
                 ans.push(A[i][j]);
     return ans;
 };
@@ -32,7 +39,12 @@ console.log(luckyNumbers(B));
 console.log(luckyNumbers([[7,8],[1,2]]));
 
 
-
+/*
+ * 1382. Balance a Binary Search Tree
+ *
+ * Q: https://leetcode.com/problems/balance-a-binary-search-tree/
+ * A: https://leetcode.com/problems/balance-a-binary-search-tree/discuss/540272/Javascript-and-C%2B%2B-solutions
+ */
 
 class TreeNode {
     constructor(val) {
@@ -51,8 +63,8 @@ let balanceBST = (root, A = []) => {
     let bal = (root = null, i = 0, j = A.length - 1) => {
         let k = Math.floor((i + j) / 2);
         root = new TreeNode(A[k]);
-        root.left = i <= k - 1 ? bal(root, i, k - 1) : null;
-        root.right = k + 1 <= j ? bal(root, k + 1, j) : null;
+        root.left  = i < k ? bal(root, i, k - 1) : null;
+        root.right = k < j ? bal(root, k + 1, j) : null;
         return root;
     };
     return bal();
@@ -70,7 +82,12 @@ let go = (root) => {
 };
 
 
-
+/*
+ * 1381. Design a Stack With Increment Operation
+ *
+ * Q: https://leetcode.com/problems/design-a-stack-with-increment-operation/
+ * A: https://leetcode.com/problems/design-a-stack-with-increment-operation/discuss/539695/Javascript-and-C%2B%2B-solutions
+ */
 
 class CustomStack {
     constructor(maxSize) {
