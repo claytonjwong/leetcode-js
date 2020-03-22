@@ -18,6 +18,7 @@ let createTargetArray = (nums, index, ans = []) => {
     return ans;
 };
 
+
 /*
  * 1390. Four Divisors
  *
@@ -46,39 +47,12 @@ let sumFourDivisors = (A, ans = 0) => {
 };
 
 
-// let N = A.length;
-// for (let i = 0; i < N; ++i) {
-//     for (let j = 0; j < N; ++j) {
-
-//     }
-// }
-
-// let nums =  [0,1,2,3,4]
-// let index = [0,1,2,2,1]
-// //          [0,4,1,3,2]
-
-// A = [1,2]
-// A.splice(2, 0, 3);
-// console.log(A)
-
-// let hasValidPath = A => {
-//     let M = A.length,
-//         N = A[0].length;
-    
-
-// };
-
-// [
-//     [2,4,3],
-//     [6,5,2]
-// ]
-
-// i = 0, j = 0  2  [[-1,  0], [ 1,  0]], // 2 from upper to lower (if at 0, 0, from doesn't matter)
-// i = 1, j = 0  6  [[ 0,  1], [ -1, 0]], // 6 from right to upper
-
-// so either the first matches or the second matches
-
-// seen track of seen and BFS
+/*
+ * 1391. Check if There is a Valid Path in a Grid
+ *
+ * Q: https://leetcode.com/problems/check-if-there-is-a-valid-path-in-a-grid/
+ * A: https://leetcode.com/problems/check-if-there-is-a-valid-path-in-a-grid/discuss/547872/Javascript-and-C%2B%2B-solutions
+ */
 
 let hasValidPath = A => {
     let dir = [
