@@ -13,7 +13,7 @@
  */
 
 let simplifyPath = (path, stack = []) => {
-    let A = path.split('/').filter(x => x.length > 0);
+    let A = path.split('/').filter(dir => dir.length > 0);
     for (let dir of A)
         if (dir != '.' && dir != '..')
             stack.push(dir);
