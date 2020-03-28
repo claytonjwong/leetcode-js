@@ -16,18 +16,13 @@ let getKth = (lo, hi, k, m = new Map(), dist = 0) => {
     let powVal = x => x == 1 ? 0 : x % 2 == 0 ? 1 + powVal(x / 2) : 1 + powVal(3 * x + 1);
     for (let i = lo; i <= hi; ++i) {
         let val = powVal(i);
-        if (m.has(val))
-            m.set(val, m.get(val).concat(i));
-        else
-            m.set(val, [ i ]);
+        m.set(val, (m.get(val) || []).concat(i));
     }
-    let A = [...m.entries()].sort((a, b) => a[0] - b[0]);
-    console.log(A);
+    let A = [...m.entries()].sort((a, b) => a[0] - b[0]).map(a => a[1]); // sort by powVal and drop powVal to only keep each "set" of i-th values from [lo..hi]
     for (let i = 0; i < A.length; ++i) {
-        let set = A[i][1].sort((a, b) => a - b);
-        console.log(`${i}-th set: ${set}`);
+        let set = A[i];
         for (let j = 0; j < set.length; ++j)
-            if (++dist == k)
+            if (++dist == k) // target 🎯
                 return set[j];
     }
     return -1;
