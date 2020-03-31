@@ -64,7 +64,7 @@ let minDistance = (A, B) => {
 
 let minDistance = (A, B) => {
     let [M, N] = [A.length, B.length];
-    let pre = [...Array(N + 1)].map((_, i) => i), cur = [...pre];
+    let pre = [...Array(N + 1).keys()], cur = Array(N + 1);
     for (let i = 1; i <= M; ++i) {
         cur[0] = i;
         for (let j = 1; j <= N; ++j) {
