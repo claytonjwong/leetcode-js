@@ -10,7 +10,7 @@
  * @return {number}
  */
 
-var maxSubArray = A => {
+let maxSubArray = A => {
     let sum = A[0],
         max = A[0];
     for (let i = 1; i < A.length; ++i) {
