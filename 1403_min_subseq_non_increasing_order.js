@@ -8,7 +8,7 @@
 let minSubsequence = (A, ans = []) => {
     A.sort((a, b) => b - a);
     let total = A.reduce((a, b) => a + b),
-	    half = Math.floor(total / 2);
+        half = Math.floor(total / 2);
     for (let i = 0, sum = 0; i < A.length && sum <= half; ++i)
         sum += A[i], ans.push(A[i]);
     return ans;
