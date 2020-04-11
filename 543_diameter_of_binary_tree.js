@@ -7,8 +7,8 @@
 
 let diameterOfBinaryTree = (root, max = 0) => {
     let go = (root) => {
-        let L = root.left  ? 1 + go(root.left)  : 0;
-        let R = root.right ? 1 + go(root.right) : 0;
+        let L = root.left ?  1 + go(root.left)  : 0,
+            R = root.right ? 1 + go(root.right) : 0;
         max = Math.max(max, L + R);
         return Math.max(L, R);
     };
