@@ -62,7 +62,7 @@ let entityParser = (text, i = -1, j = -1, ans = []) => {
         if (c == '&') i = k;
         if (c == ';') j = k;
         if (i < j) {
-            let N = ans.length - (j - i + 1); // N == |text[i..j]| (+1 for i..j inclusive)
+            let N = ans.length - (j - i + 1); // // N is the index of text[i..j] (+1 for i..j inclusive)
             let T = ans.slice(N).join(''); // target 🎯
             if (map.has(T)) {
                 ans = ans.slice(0, N); // remove text[i..j]
