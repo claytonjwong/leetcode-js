@@ -19,10 +19,21 @@
 //     return m[`${M - 1},${N - 1}`];
 // };
 
+// let uniquePaths = (M, N, m = {}) => {
+//     let dp = [...Array(M)].map(row => Array(N).fill(1));
+//     for (let i = 1; i < M; ++i)
+//         for (let j = 1; j < N; ++j)
+//             dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+//     return dp[M - 1][N - 1];
+// };
+
 let uniquePaths = (M, N, m = {}) => {
-    let dp = [...Array(M)].map(row => Array(N).fill(1));
-    for (let i = 1; i < M; ++i)
+    let pre = Array(N).fill(1),
+        cur = Array(N).fill(1);
+    for (let i = 1; i < M; ++i) {
         for (let j = 1; j < N; ++j)
-            dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
-    return dp[M - 1][N - 1];
+            cur[j] = pre[j] + cur[j - 1];
+        [pre, cur] = [cur, pre];
+    }
+    return pre[N - 1];
 };
