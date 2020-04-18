@@ -1,0 +1,35 @@
+/*
+ * 64. Minimum Path Sum
+ *
+ * Q: https://leetcode.com/problems/minimum-path-sum/
+ * A: https://leetcode.com/problems/minimum-path-sum/discuss/585496/Javascript-and-C%2B%2B-solutions
+ */
+
+let minPathSum = A => {
+    let M = A.length,
+        N = A[0].length;
+    let dp = [...Array(M)].map(row => Array(N).fill(-1));
+    let go = (i, j, res = -1) => {
+        if (dp[i][j] > -1)
+            return dp[i][j];
+        if (!i && !j)
+            return dp[i][j] = A[0][0];
+        if (!i) res = A[i][j] + go(i, j - 1);
+        if (!j) res = A[i][j] + go(i - 1, j);
+        if (i && j) res = A[i][j] + Math.min(go(i, j - 1), go(i - 1, j));
+        return dp[i][j] = res;
+    }
+    return go(M - 1, N - 1);
+};
+
+let minPathSum = A => {
+    let M = A.length,
+        N = M ? A[0].length : 0;
+    let dp = [...A];
+    for (let i = 1; i < M; ++i) dp[i][0] += dp[i - 1][0];
+    for (let j = 1; j < N; ++j) dp[0][j] += dp[0][j - 1];
+    for (let i = 1; i < M; ++i)
+        for (let j = 1; j < N; ++j)
+            dp[i][j] += Math.min(dp[i - 1][j], dp[i][j - 1])
+    return dp[M - 1][N - 1];
+};
