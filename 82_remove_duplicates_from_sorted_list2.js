@@ -42,7 +42,7 @@ let deleteDuplicates = head => {
     while (cur) {
         while (cur.next && cur.val == cur.next.val)
             cur = cur.next;
-        if (pre == cur || pre.val != cur.val)
+        if (pre == cur)
             ans.next = cur, ans = ans.next;
         pre = cur = cur.next;
     }
