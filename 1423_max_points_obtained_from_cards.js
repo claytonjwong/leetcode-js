@@ -79,7 +79,18 @@ let maxScore = (A, K) => {
     let N = A.length;
     let sum = A.slice(N - K, N).reduce((a, b) => a + b),
         max = sum;
-    for (let i = 0, j = N - K; K--; max = Math.max(max, sum += A[i++] - A[j++]));
+    for (let i = 0, j = N - K; K--; max = Math.max(max, sum += A[i++] - A[j++])); // slide window by K 👉
+    return max;
+}
+
+// AC
+let maxScore = (A, K) => {
+    let N = A.length,
+        i = 0,
+        j = N - K;
+    let sum = A.slice(j, N).reduce((a, b) => a + b),
+        max = sum;
+    while (K--) max = Math.max(max, sum += A[i++] - A[j++]); // slide window by K 👉
     return max;
 }
 
