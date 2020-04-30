@@ -1,6 +1,7 @@
 /*
 Apple Online Assessment
 Completed April 15, 2020 6:13 PM
+Your interview score of 9.17/10 beats 96% of all users.
 Time Spent: 11 minutes 16 seconds
 Time Allotted: 1 hour
 */
