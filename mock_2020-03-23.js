@@ -1,6 +1,7 @@
 /*
  * Facebook- Online Assessment
  * Completed March 23, 2020 5:18 PM
+ * Your interview score of 7.76/10 beats 90% of all users.
  * Time Spent: 17 minutes 57 seconds
  * Time Allotted: 1 hour
  */
