@@ -8,5 +8,6 @@
 let checkIfCanBreak = (a, b) => {
     let A = a.split('').sort(),
         B = b.split('').sort();
-    return A.every((_, i) => A[i].localeCompare(B[i]) <= 0);
+    return A.every((_, i) => A[i].localeCompare(B[i]) <= 0)
+        || B.every((_, i) => B[i].localeCompare(A[i]) <= 0);
 };
