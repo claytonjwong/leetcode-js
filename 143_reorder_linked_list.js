@@ -21,3 +21,19 @@ let reorderList = (head, A = []) => {
     }
     tail.next = null;
 };
+
+let reorderList = (head, S = []) => {
+    for (let cur = head; cur; cur = cur.next)
+        S.push(cur);
+    let N = S.length;
+    let cur = head;
+    for (let i = 0; i < Math.floor(N / 2); ++i) {
+        let add = S.pop();
+        add.next = cur.next;
+        cur.next = add;
+        cur = add.next;
+    }
+    if (cur)
+        cur.next = null;
+    return head;
+};
