@@ -5,6 +5,26 @@
  * A: https://leetcode.com/problems/minimum-time-to-collect-all-apples-in-a-tree/discuss/627010/Javascript-and-C%2B%2B-solutions
  */
 
+// DFS
+let minTime = (N, E, A, m = {}, seen = new Set(), ans = 0) => {
+    for (let [u, v] of E) {
+        if (!m[u]) m[u] = new Set();
+        if (!m[v]) m[v] = new Set();
+        m[u].add(v);
+        m[v].add(u);
+    }
+    let go = (u = 0) => {
+        seen.add(u);
+        let found = A[u];
+        for (let v of [...m[u]])
+            if (!seen.has(v) && go(v))
+                found = true, ans += 2; // apple found in subtree v 🎯
+        return found;
+    };
+    go();
+    return ans;
+};
+
 // Bellman-Ford
 let minTime = (N, E, A, ans = 0) => {
     let dist = Array(N).fill(Infinity),
