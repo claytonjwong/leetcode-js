@@ -6,7 +6,7 @@
  */
 
 // DFS
-let minTime = (N, E, A, m = {}, seen = new Set(), ans = 0) => {
+let minTime = (_, E, A, m = {}, seen = new Set(), ans = 0) => {
     for (let [u, v] of E) {
         if (!m[u]) m[u] = new Set();
         if (!m[v]) m[v] = new Set();
