@@ -41,29 +41,30 @@ A = 112334488
 K is a single digit, return A[k]
 */
 
-/**
- * @param {number[]} nums
- * @return {number}
- */
+// xor
+let singleNonDuplicate = (A, xor = 0) => {
+    A.forEach(x => xor ^= x);
+    return xor;
+};
 
+// binary search
 let singleNonDuplicate = A => {
     let N = A.length,
         i = 0,
-        j = N;
+        j = N,
+        beg = 0,
+        end = N - 1;
     for (;;) {
-        let k = Math.floor((i + j) / 2), min = k, max = k;
-        console.log(`${i},${k},${j}`)
-        if (k > 0 && A[k - 1] == A[k])
-            min = k - 1;
-        if (k < N - 1 && A[k] == A[k + 1])
-            max = k + 1;
-        console.log(`${min},${max}`)
-        if (k == min && k == max) // target 🎯
-            return A[k];
-        if (min % 2 == 1) // 👈 left is odd
-            j = min;
-        else // 👉 right is odd
-            i = max;
+        let k = Math.floor((i + j) / 2);
+        let min = k,
+            max = k;
+        if (k > beg && A[k] == A[k - 1]) min = k - 1;
+        if (k < end && A[k] == A[k + 1]) max = k + 1;
+        if (k == min && k == max)
+            return A[k]; // target 🎯
+        if (min % 2) j = min; // 👈 left half has odd length
+        if (max % 2) i = max; // 👉 right half has odd length
     }
 };
+
 console.log(singleNonDuplicate([3,3,7,7,10,11,11]));
