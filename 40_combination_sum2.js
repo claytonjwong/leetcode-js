@@ -12,11 +12,11 @@
  */
 
 let combinationSum2 = (A, target, ans = []) => {
+    let N = A.length;
+    A.sort((a, b) => a - b);
     let dfs = (sum, start = 0, path = [], seen = new Set()) => {
         if (sum == 0) {
-            let sorted = [...path];
-            sorted.sort((a, b) => a - b);
-            let key = sorted.join();
+            let key = path.join(',');
             if (!seen.has(key))
                 ans.push([...path]);
             seen.add(key);
