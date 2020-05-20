@@ -8,11 +8,13 @@ let compare = (A, target, ans = []) => {
     };
     let T = hash(target); // 🎯
     A.forEach(s => {
-      if (hash(s) == target)
+      if (hash(s) == T)
           ans.push(s);
     });
     return ans;
 };
+console.log(compare(['abb', 'abc', 'xyz', 'xyy', 'yza'], 'mnq')); // abc xyz yza
+console.log(compare(['abb', 'abc', 'xyz', 'xyy', 'wgw'], 'aba')); // wgw
 
 
 //
