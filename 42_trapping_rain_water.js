@@ -37,14 +37,15 @@
 // };
 
 // AC: prefix maximum L/R -> O(N)
-let trap = (A, ans = 0) => {
+let trap = (A, sum = 0) => {
     let N = A.length;
-    if (N < 3)
-        return 0;
-    let beg = 0, end = N - 1;
-    let L = Array(N).fill(A[beg]); for (let i = beg + 1; i <  N; ++i) L[i] = Math.max(A[i], L[i - 1]);
-    let R = Array(N).fill(A[end]); for (let i = end - 1; i > -1; --i) R[i] = Math.max(A[i], R[i + 1]);
+    let L = Array(N).fill(0),
+        R = Array(N).fill(0);
+    let beg = 0,
+        end = N - 1;
+    for (let i = beg; i < N;  ++i) L[i] = i == beg ? A[i] : Math.max(A[i], L[i - 1]); // (L)eft-to-right 👉
+    for (let j = end; 0 <= j; --j) R[j] = j == end ? A[j] : Math.max(A[j], R[j + 1]); // (R)ight-to-left 👈
     for (let i = 1; i + 1 < N; ++i)
-        ans += Math.max(Math.min(L[i], R[i]) - A[i], 0);
-    return ans;
+        sum += Math.min(L[i], R[i]) - A[i]; // accumulate water sum per column i 🎯
+    return sum;
 };
