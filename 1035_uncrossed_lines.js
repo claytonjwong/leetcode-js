@@ -51,3 +51,20 @@ let maxUncrossedLines = (A, B) => {
             );
     return dp[M][N];
 };
+
+// Bottom-Up Mem Opt: AC
+let maxUncrossedLines = (A, B) => {
+    let M = A.length,
+        N = B.length;
+    let pre = Array(N + 1).fill(0),
+        cur = [...pre];
+    for (let i = 1; i <= M; ++i) {
+        for (let j = 1; j <= N; ++j)
+            cur[j] = Math.max(
+                pre[j - 1] + Number(A[i - 1] == B[j - 1]), // match 🎯 / mismatch
+                cur[j - 1], pre[j]                         // insertion / deletion
+            );
+        [pre, cur] = [cur, pre]; // swap
+    }
+    return pre[N];
+};
