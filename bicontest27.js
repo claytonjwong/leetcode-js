@@ -52,7 +52,7 @@ let checkIfPrerequisite = (N, E, queries, m = new Map()) => {
     return queries.map(([beg, end]) => dfs(beg, end));
 };
 
- /*
+/*
  * 1463. Cherry Pickup II
  *
  * Q: https://leetcode.com/problems/cherry-pickup-ii/
@@ -66,16 +66,15 @@ let cherryPickup = A => {
     let go = (i = 0, L = 0, R = N - 1, max = 0) => {
         if (i == M)
             return 0;
-        for (let p = -1; p <= 1; ++p) { // L column offset: left, same, right
+        for (let p = -1; p <= 1; ++p) { // next L column relative offset: -1, 0, 1 (left, same, right)
             let left = L + (0 < i ? p : 0);
             if (!(0 <= left && left < N))
                 continue;
-            for (let q = -1; q <= 1; ++q) { // R column offset: left, same, right
+            for (let q = -1; q <= 1; ++q) { // next R column relative offset: -1, 0, 1 (left, same, right)
                 let right = R + (0 < i ? q : 0);
                 if (!(0 <= right && right < N) || right <= left) // pruning condition: right <= left is always a sub-optimal solution
                     continue;
-                let cand = A[i][left] + (left != right ? A[i][right] : 0); // maximum candidate
-                max = Math.max(max, cand + go(i + 1, left, right));
+                max = Math.max(max, A[i][left] + A[i][right] + go(i + 1, left, right));
             }
         }
         return max;
@@ -94,19 +93,19 @@ let cherryPickup = A => {
         if (i == M)
             return m[key] = 0;
         m[key] = 0;
-        for (let p = -1; p <= 1; ++p) { // L column offset: left, same, right
+        for (let p = -1; p <= 1; ++p) { // next L column relative offset: -1, 0, 1 (left, same, right)
             let left = L + (0 < i ? p : 0);
             if (!(0 <= left && left < N))
                 continue;
-            for (let q = -1; q <= 1; ++q) { // R column offset: left, same, right
+            for (let q = -1; q <= 1; ++q) { // next R column relative offset: -1, 0, 1 (left, same, right)
                 let right = R + (0 < i ? q : 0);
                 if (!(0 <= right && right < N) || right <= left) // pruning condition: right <= left is always a sub-optimal solution
                     continue;
-                let cand = A[i][left] + (left != right ? A[i][right] : 0); // maximum candidate
-                m[key] = Math.max(m[key], cand + go(i + 1, left, right));
+                m[key] = Math.max(m[key], A[i][left] + A[i][right] + go(i + 1, left, right));
             }
         }
         return m[key];
     };
     return go();
 };
+
