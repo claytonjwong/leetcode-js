@@ -31,16 +31,12 @@ var solveNQueens = (N, ans = []) => {
         }
     };
     dfs();
-    let out = [];
-    for (let k = 0; k < ans.length; ++k) {
-        let S = [...Array(N)].map(row => Array(N).fill('.'));
-        for (let i = 0; i < N; ++i) {
-            let j = ans[k][i];
-            S[i][j] = 'Q';            
-        }
-        out.push([...S].map(row => row.join('')));
-    }
-    return out;
+    let init = Array(N).fill('.'); // initial empty row of board
+    return ans.map(board => board.map(j => {
+        let row = [...init];
+        row[j] = 'Q';
+        return row.join('');
+    }));
 };
 
 let ans = solveNQueens(8);
