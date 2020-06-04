@@ -6,11 +6,11 @@
  */
 let networkDelayTime = (E, N, K) => {
     let dist = Array(N + 1).fill(Infinity); // +1 for 1-based indexing
-    dist[K] = 0;
+    dist[0] = dist[K] = 0;
     while (--N)
         for (let [u, v, w] of E)
             if (dist[v] > dist[u] + w)
                 dist[v] = dist[u] + w;
-    let max = Math.max(...dist.slice(1)); // exclude sentinel at index 0
+    let max = Math.max(...dist);
     return max < Infinity ? max : -1;
 };
