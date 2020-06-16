@@ -13,7 +13,7 @@ let validIPAddress = IP => {
     };
     let isNum = s => (s == '0' || (1 <= Number(s) && Number(s) <= 255 && s[0] != '0'))
         && s.split('').every(c => isDigit(c));
-	let isHex = s => 1 <= s.length && s.length <= 4
+    let isHex = s => 1 <= s.length && s.length <= 4
         && (Number(s) != NaN || parseInt(s, 16).toString(16) == s.toLowerCase())
         && s.split('').every(c => isDigit(c) || isAlpha(c));
     let IPv4 = IP.split('.').length == 4 && IP.split('.').every(s => isNum(s)),
