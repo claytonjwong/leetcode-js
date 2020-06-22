@@ -10,7 +10,9 @@
  * @return {number}
  */
 
-let singleNumber = (A, res = 0) => {
-    A.forEach(x => res ^= x);
-    return res;
+let singleNumber = (A, ans = 0) => {
+    A.forEach(x => ans ^= x);
+    return ans;
 };
+
+let singleNumber = A => A.reduce((a, b) => a ^ b, 0);
