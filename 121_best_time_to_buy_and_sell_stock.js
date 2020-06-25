@@ -5,15 +5,22 @@
  * A: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/discuss/507318/Javascript-and-C%2B%2B-solutions
  */
 
-/**
- * @param {number[]} prices
- * @return {number}
- */
+// monotonically decreasing stack
+let maxProfit = (A, stack = [], max = 0) => {
+    stack.back = () => stack[stack.length - 1];
+    for (let x of A) {
+        if (!stack.length || x < stack.back())
+            stack.push(x);
+        max = Math.max(max, x - stack.back());
+    }
+    return max;
+};
 
-let maxProfit = (A, ans = 0) => {
-    let low = A.length > 0 ? A[0] : -1;
-    for (let x of A)
-        ans = Math.max(ans, x - low),
-        low = Math.min(low, x);
-    return ans;
+// track minimum
+let maxProfit = (A, min = Infinity, max = 0) => {
+    for (let x of A) {
+        min = Math.min(min, x);
+        max = Math.max(max, x - min);
+    }
+    return max;
 };
