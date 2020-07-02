@@ -32,3 +32,16 @@ let findMin = A => {
     }
     return A[i];
 };
+
+// more concise
+let findMin = A => {
+    let N = A.length,
+        i = 0,
+        j = N - 1;
+    while (i < j && A[j] < A[i]) {
+        let k = Math.floor((i + j) / 2);
+        if (A[i] <= A[k]) i = k + 1; // case 2: k is in the 👈 left-most maximal-partition of A
+        if (A[k] <= A[j]) j = k;     // case 3: k is in the 👉 right-most minimal-partition of A
+    }
+    return A[i];
+};
