@@ -71,20 +71,24 @@ let search = function(A, T) {
 */
 
 let search = function(A, T) {
-    let pivot = x => x >= A[0], target = x => x < T; // predicates for binary search criteria
+    let pivot = x => A[0] <= x, target = x => x < T; // predicates for binary search criteria
     let find = (i, j, pred) => {
         while (i < j) {
             let k = Math.floor((i + j) / 2);
-            i =  pred(A[k]) ? k + 1 : i;
-            j = !pred(A[k]) ? k     : j;
+            if (pred(A[k]))
+                i = k + 1;
+            else
+                j = k;
         }
         return pred == pivot ? i : A[i] == T ? i : -1; // return index of pivot or index of target
     };
-    let N = A.length, i = 0, j = N - 1;
+    let N = A.length,
+        i = 0,
+        j = N - 1;
     if (A[i] < A[j]) // A is not rotated
         return find(i, j, target);
     let k = find(i, j, pivot);
-    return T > A[N - 1] ? find(0, k - 1, target) : find(k, N - 1, target); // find in big part or small part
+    return A[N - 1] < T ? find(0, k - 1, target) : find(k, N - 1, target); // find T in maximal xor minimal part of A
 };
 
 console.log(search([3,1], 1));
