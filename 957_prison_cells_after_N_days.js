@@ -6,10 +6,9 @@
  */
 
 let prisonAfterNDays = (A, N, all = [], m = new Map(), P = 0) => {
-    let cur = [...A],
-        pre = [...A];
+    let pre = [...A];
     for (let day = 0; day <= N; ++day) {
-        all.push([...pre]);
+        all.push([...pre]); // 👀 track all seen
         // ⭐️ find pisano period to avoid TLE for large values of N
         let key = pre.join('');
         if (m.has(key)) {
@@ -18,12 +17,11 @@ let prisonAfterNDays = (A, N, all = [], m = new Map(), P = 0) => {
         }
         m.set(key, day);
         // 🤔 generate current from previous
-        cur[0] = cur[7] = 0; // first and last are always set to 0
+        let cur = Array(8).fill(0);
         for (let i = 1; i < 7; ++i)
             cur[i] = Number(pre[i - 1] == pre[i + 1]);
         [pre, cur] = [cur, pre]; // swap
     }
-    return pre == cur ? cur             // case 1: if previous equals current, then pattern is immutable until N-th day
-         : !P ? all[all.length - 1]     // case 2: pisano period not reached in N days, return N-th day's solution
-         : N % P ? all[N % P] : all[P]; // case 3: return N-th day based upon the pisano period
+    return !P ? all[all.length - 1]     // ❌ case 1: pisano period *not* found in N days, return N-th day's solution
+         : N % P ? all[N % P] : all[P]; // ✅ case 2: pisano period found, return N-th day's solution based upon pisano period
 };
