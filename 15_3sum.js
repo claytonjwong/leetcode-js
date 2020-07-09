@@ -9,7 +9,7 @@ let threeSum = (A, ans = []) => {
     A.sort((a, b) => a - b);
     let N = A.length,
         i = 0;
-    while (i + 2 < N) {
+    while (i + 2 < N) { // +2 to make room for j and k
         let j = i + 1,
             k = N - 1;
         while (j < k) { // ⭐️ 2sum window [ j ... k ]
