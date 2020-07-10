@@ -13,6 +13,31 @@ class Node {
     }
 };
 
+// iterative
+let flatten = (head, stack = []) => {
+    let sentinel = new Node(-1, null, head, null);
+    let pre = sentinel,
+        cur = sentinel.next;
+    while (cur || stack.length) {
+        if (!cur) { // ⭐️ done exploring level, link tail node of this level to next node of level above 👆
+            cur = stack.pop(); // next node of level above 🤔
+            pre.next = cur; // 🔗 tail node of previous level 👉 next node of current level
+            cur.prev = pre; // 🔗 tail node of previous level 👈 next node of current level
+        }
+        if (cur.child) { // start exploring level below 👇, store next node of current level 🤔
+            if (cur.next)
+                stack.push(cur.next);
+            cur.next = cur.child; // 🔗 current node 👉 child of current node
+            cur.child.prev = cur; // 🔗 current node 👈 child of current node
+            cur.child = null; // 🚫 remove child to flatten list
+        }
+        pre = cur;
+        cur = cur.next;
+    };
+    return head;
+};
+
+// recursive
 let flatten = (head) => {
     let go = (node = head) => {
         let cur = node,
