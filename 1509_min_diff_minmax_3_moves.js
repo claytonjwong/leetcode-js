@@ -3,7 +3,10 @@
  *
  * Q: https://leetcode.com/problems/minimum-difference-between-largest-and-smallest-value-in-three-moves/
  * A: https://leetcode.com/problems/minimum-difference-between-largest-and-smallest-value-in-three-moves/discuss/730531/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/minimum-difference-between-largest-and-smallest-value-in-three-moves/discuss/731233/Similar-to-1423.-Maximum-Points-You-Can-Obtain-from-Cards
  */
+
+// verbose
 let minDifference = (A, min = Infinity) => {
     let N = A.length;
     let minDiff = A => {
@@ -17,4 +20,15 @@ let minDifference = (A, min = Infinity) => {
         A.push(A.shift())
     }
     return min;
+};
+
+// concise
+let minDifference = (A, min = Infinity) => {
+    A.sort((a, b) => a - b);
+    let N = A.length,
+        i = 0,
+        j = N - 4;
+    while (0 <= j && j < N)
+		min = Math.min(min, A[j++] - A[i++]); // slide window by 3 👉
+    return min < Infinity ? min : 0;
 };
