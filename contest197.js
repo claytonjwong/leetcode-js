@@ -23,7 +23,7 @@ let numIdenticalPairs = (A, cnt = 0) => {
     return cnt;
 };
 
- /*
+/*
  * 1513. Number of Substrings With Only 1s
  *
  * Q: https://leetcode.com/problems/number-of-substrings-with-only-1s/
