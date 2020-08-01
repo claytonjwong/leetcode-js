@@ -15,10 +15,10 @@ let slidingPuzzle = (A, T = '123450', adj = { 0: [1, 3], 1: [0, 2, 4], 2: [1, 5]
             let cur = q.shift();
             if (cur.join('') == T) // 🎯 target T found
                 return depth;
-            let u = cur.indexOf(0);
-            for (let v of adj[u]) {
+            let i = cur.indexOf(0);
+            for (let j of adj[i]) {
                 let next = [...cur];
-                [next[u], next[v]] = [next[v], next[u]]; // swap u,v
+                [next[i], next[j]] = [next[j], next[i]]; // swap i,j
                 if (!seen.has(key(next)))
                     q.push(next), seen.add(key(next));
             }
