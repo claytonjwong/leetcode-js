@@ -35,31 +35,51 @@ let findKthBit = (n, k) => {
 };
 
 // incorrect algorithm
+// let maxNonOverlapping = (A, T, sum = 0, cnt = 0) => {
+//     if (!T)
+//         return A.filter(x => !x).length;
+//     let N = A.length,
+//         i = 0,
+//         j = 0;
+//     while (j < N) {
+//         if (sum < T) {
+//             sum += A[j++];
+//         }
+//         if (sum == T) {
+//             i = j, sum = 0, ++cnt
+//         }
+//         if (T < sum) {
+//             sum -= A[i++];
+//         }
+//     }
+//     return cnt;
+// };
+
+// -5,5,-4,5,4
+// -5 0 -4 1 5
+
 let maxNonOverlapping = (A, T, sum = 0, cnt = 0) => {
     if (!T)
         return A.filter(x => !x).length;
+    let offset = Math.abs(Math.min(...A));
+    A = A.map(x => x + offset);
+    T += offset;
     let N = A.length,
         i = 0,
         j = 0;
     while (j < N) {
         if (sum < T) {
-            if (i < j && sum + A[j] < sum - A[i])
-                sum -= A[i++]
-            else
-                sum += A[j++];
+            sum += A[j++];
         }
-        if (sum == T) {
+        else if (sum == T) {
             i = j, sum = 0, ++cnt
         }
-        if (T < sum) {
+        else if (sum > T) {
             sum -= A[i++];
         }
     }
     return cnt;
 };
-
-// -5,5,-4,5,4
-// -5 0 -4 1 5
 
 
 console.log(`${maxNonOverlapping([1,1,1,1,1], 2)} == 2`)
