@@ -1,19 +1,21 @@
-/**
- * @param {string[]} ops
- * @return {number}
+/*
+ * 682. Baseball Game
+ *
+ * Q: https://leetcode.com/problems/baseball-game/
+ * A: https://leetcode.com/problems/baseball-game/discuss/107929/C%2B%2B-and-Javascript-solutions
  */
-var calPoints = (ops) => {
-  var A = [];
-  for (let op of ops) {
-    var N = A.length;
-    if      (op == 'C') A.pop();
-    else if (op == 'D') A.push(2 * A[N-1]);
-    else if (op == '+') A.push(A[N-2] + A[N-1]);
-    else                A.push(parseInt(op));
-  }
-  return A.reduce((a, b) => a + b, 0);
-};
 
-var ops = ["5","2","C","D","+"];
-var ans = calPoints(ops);
-console.log(ans);
+let calPoints = (ops, s = []) => {
+  for (op of ops) {
+      let N = s.length;
+      if (op == '+')
+          s.push(s[N - 2] + s[N - 1]);
+      else if (op == 'D')
+          s.push(2 * s[N - 1]);
+      else if (op == 'C')
+          s.pop();
+      else
+          s.push(Number(op));
+  }
+  return _.sum(s)
+};
