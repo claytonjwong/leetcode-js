@@ -2,34 +2,23 @@
  * 40. Combination Sum II
  *
  * Q: https://leetcode.com/problems/combination-sum-ii/
- * A: https://leetcode.com/problems/combination-sum-ii/discuss/506360/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/combination-sum-ii/discuss/506360/Javascript-Python3-C%2B%2B-DFS-%2B-BT-solutions
  */
 
- /**
- * @param {number[]} candidates
- * @param {number} target
- * @return {number[][]}
- */
-
-let combinationSum2 = (A, target, ans = []) => {
+let combinationSum2 = (A, T, seen = new Set(), paths = []) => {
     let N = A.length;
-    A.sort((a, b) => a - b);
-    let dfs = (sum, start = 0, path = [], seen = new Set()) => {
-        if (sum == 0) {
-            let key = path.join(',');
+    let go = (start = 0, t = T, path = []) => {
+        if (!t) {
+            let key = path.sort((a, b) => a - b).join(',');  // 🎯 unique path with target sum T
             if (!seen.has(key))
-                ans.push([...path]);
+                paths.push([...path]);
             seen.add(key);
             return;
         }
-        for (let i = start; i < A.length; ++i) {
-            if (sum - A[i] < 0)
-                continue;
-            path.push(A[i]);
-            dfs(sum - A[i], i + 1, path, seen);
-            path.pop();
-        }
+        for (let i = start; i < A.length; ++i)
+            if (0 <= t - A[i])
+                go(i + 1, t - A[i], path.concat(A[i]))       // 🚀 recursively explore path with implicit 👀 forward/back-tracking
+        return paths
     };
-    dfs(target);
-    return ans;
+    return go();
 };
