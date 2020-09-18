@@ -18,16 +18,10 @@ class BSTIterator {
         };
         go(root);
     }
-    hasNext() {
-        return this.i + 1 < this.A.length;
-    }
-    next() {
-        return this.A[++this.i];
-    }
-    hasPrev() {
-        return 0 < this.i;
-    }
-    prev() {
-        return this.A[--this.i];
-    }
+
+    hasPrev = () => 0 < this.i;
+    hasNext = () => this.i + 1 < this.A.length;
+
+    prev = () => this.A[--this.i];
+    next = () => this.A[++this.i];
 }
