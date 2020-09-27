@@ -14,3 +14,15 @@ let licenseKeyFormatting = (S, K, ans = []) => {
     }
     return ans.reverse().join('');
 };
+
+let licenseKeyFormatting = (S, K, ans = []) => {
+    let A = S.split('').filter(c => c != '-').map(c => c.toUpperCase());
+    while (A.length) {
+        let take = Math.min(A.length, K),
+            word = [];
+        while (take--)
+            word.unshift(A.pop());
+        ans.unshift(word.join(''));
+    }
+    return ans.join('-');
+};
