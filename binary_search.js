@@ -7,7 +7,7 @@
 let lowerBound = (A, T) => {
     let N = A.length,
         i = 0,
-        j = N - 1;
+        j = N;
     while (i < j) {
         let k = Math.floor((i + j) / 2);
         if (A[k] < T)
@@ -21,7 +21,7 @@ let lowerBound = (A, T) => {
 let upperBound = (A, T) => {
     let N = A.length,
         i = 0,
-        j = N - 1;
+        j = N;
     while (i < j) {
         let k = Math.floor((i + j + 1) / 2);
         if (A[k] <= T)
