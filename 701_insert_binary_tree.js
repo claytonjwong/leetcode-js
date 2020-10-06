@@ -5,6 +5,19 @@
  * A: https://leetcode.com/problems/insert-into-a-binary-search-tree/discuss/881995/Javascript-Python3-C%2B%2B-Recursive
  */
 
+// concise
+let insertIntoBST = (root, x) => {
+    let go = (root, x) => {
+        if (x < root.val)
+            root.left =  root.left  ? go(root.left, x)  : new TreeNode(x);
+        else
+            root.right = root.right ? go(root.right, x) : new TreeNode(x);
+        return root
+    };
+    return root ? go(root, x) : new TreeNode(x);
+};
+
+// verbose
 let insertIntoBST = (root, x) => {
     let go = (root, x) => {
         if (x < root.val) {
