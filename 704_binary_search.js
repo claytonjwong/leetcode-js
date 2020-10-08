@@ -2,13 +2,13 @@
  * 704. Binary Search
  *
  * Q: https://leetcode.com/problems/binary-search/
- * A: https://leetcode.com/problems/binary-search/discuss/600517/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/binary-search/discuss/600517/Javascript-Python3-C%2B%2B-Lower-Bound
  */
 
-let search = (A, T) => {
+let lowerBound = (A, T) => {
     let N = A.length,
         i = 0,
-        j = N - 1;
+        j = N;
     while (i < j) {
         let k = Math.floor((i + j) / 2);
         if (A[k] < T)
@@ -16,5 +16,10 @@ let search = (A, T) => {
         else
             j = k;
     }
-    return A[i] == T ? i : -1;
+    return i;
+};
+let search = (A, T) => {
+    let N = A.length,
+        i = lowerBound(A, T);
+    return i != N && A[i] == T ? i : -1;
 };
