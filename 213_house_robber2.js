@@ -47,3 +47,18 @@ let rob = A => {
     };
     return Math.max(best(0), best(1));                             // ✅ with first house xor 🚫 without first house
 };
+
+// bottom-up memory optimization
+let rob = A => {
+    let N = A.length;
+    if (N == 1)                                                 // 💎 corner case
+        return A[0];
+    let best = start => {
+        let [ a, b, c ] = [ 0, 0, 0 ];                          // 🤔 memo + 🛑 base cases (ie. a = 0 and b = 0)
+        for (let i = N - 1 - (start ? 0 : 1); start <= i; --i)
+            c = Math.max(A[i] + a, b),                          // ✅ with i-th house xor 🚫 without i-th house
+            a = b, b = c;                                       // 👉 slide window
+        return c;
+    };
+    return Math.max(best(0), best(1));                          // ✅ with first house xor 🚫 without first house
+};
