@@ -2,31 +2,37 @@
  * 133. Clone Graph
  *
  * Q: https://leetcode.com/problems/clone-graph/
- * A: https://leetcode.com/problems/clone-graph/discuss/613748/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/clone-graph/discuss/613748/Kt-Js-Py3-Cpp-DFS-%2B-BFS-via-Map
  */
 
-// concise
-let cloneGraph = (node, m = {}) => {
-    if (!node)
+// DFS
+let cloneGraph = (cur, m = {}) => {
+    if (!cur)
         return null;
-    if (m[node.val])
-        return m[node.val];
-    m[node.val] = new Node(node.val);
-    for (let nei of node.neighbors)
-        m[node.val].neighbors.push(cloneGraph(nei, m));
-    return m[node.val];
+    if (m[cur.val])
+        return m[cur.val];
+    m[cur.val] = new Node(cur.val);
+    for (let adj of cur.neighbors)
+        m[cur.val].neighbors.push(cloneGraph(adj, m));
+    return m[cur.val];
 };
 
-// verbose
-let cloneGraph = (node, seen = new Map()) => {
-    let go = node => {
-        if (seen.has(node.val))
-            return seen.get(node.val);
-        let copy = new Node(node.val);
-        seen.set(node.val, copy);
-        for (let nei of node.neighbors)
-            copy.neighbors.push(go(nei));
-        return copy;
-    };
-    return node ? go(node) : null;
+// BFS
+let cloneGraph = (start, m = {}) => {
+    if (!start)
+        return null;
+    let q = [ start ],
+        seen = new Set([ start.val ]);
+    while (q.length) {
+        let cur = q.shift();
+        m[cur.val] = m[cur.val] ? m[cur.val] : new Node(cur.val);
+        for (let adj of cur.neighbors) {
+            m[adj.val] = m[adj.val] ? m[adj.val] : new Node(adj.val);
+            m[cur.val].neighbors.push(m[adj.val]);
+            if (!seen.has(adj.val))
+                q.push(adj),
+                seen.add(adj.val);
+        }
+    }
+    return m[start.val];
 };
