@@ -5,6 +5,29 @@
  * A: https://leetcode.com/problems/champagne-tower/discuss/118694/Kt-Js-Py3-Cpp-The-ART-of-Dynamic-Programming
  */
 
+// top-down with memo
+let champagneTower = (K, M, N, m = new Map()) => {
+    let go = (i, j) => {
+        let key = `${i},${j}`;
+        if (m.has(key))
+            return m.get(key);           // 🤔 memo
+        else if (!i && !j)
+            m.set(key, K);               // 🛑 base case: glass at row 0 column 0 has K poured through it
+        else if (!i || j < 0)
+            m.set(key, 0.0);             // 🚫 non-existent parent glass has 0.0 poured through it
+        else {
+            // ⭐️ each parent glass above-and-to-the-(L)eft/(R)ight either overflow when the amount poured exceeds 1.0 xor do *not* overflow when the amount poured does *not* exceed 1.0
+            // 💎 -1.0 since parent glass above consumes at-most 1.0 of the pour and div 2 when overflow occurs, because half overflows on each side of the parent glass
+            let L = go(i - 1, j - 1),
+                R = go(i - 1, j);
+            m.set(key, (1.0 <= L ? (L - 1.0) / 2 : 0.0) + (1.0 <= R ? (R - 1.0) / 2 : 0.0));
+        }
+        return m.get(key);
+    };
+    go(M, Math.max(M, N));               // 🌟 since the glasses above-and-to-the-right potentially contribute to the amount poured to M, N we choose N to be the maximum of M, N
+    return Math.min(go(M, N), 1.0);
+};
+
 // bottom-up
 let champagneTower = (K, M, N) => {
     let dp = [...Array(M + 1)].map(_ => Array(N + 2).fill(0));
