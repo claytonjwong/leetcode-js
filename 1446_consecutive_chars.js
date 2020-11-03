@@ -2,14 +2,25 @@
  * 1446. Consecutive Characters
  *
  * Q: https://leetcode.com/problems/consecutive-characters/
- * A: https://leetcode.com/problems/consecutive-characters/discuss/639815/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/consecutive-characters/discuss/639815/Kt-Js-Py3-Cpp-Best-Same
  */
 
-let maxPower = (s, max = 1) => {
-    for (let i = 1, same = 1; i < s.length; ++i)
+// last
+let maxPower = (s, last = '0', same = 1, best = 1) => {
+    for (let c of s)
+        if (last == c)
+            best = Math.max(best, ++same);
+        else
+            last = c, same = 1;
+    return best;
+};
+
+// index
+let maxPower = (s, same = 1, best = 1) => {
+    for (let i = 1; i < s.length; ++i)
         if (s[i - 1] == s[i])
-            max = Math.max(max, ++same);
+            best = Math.max(best, ++same);
         else
             same = 1;
-    return max;
-};
+    return best;
+}
