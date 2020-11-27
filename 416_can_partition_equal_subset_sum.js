@@ -2,34 +2,57 @@
  * 416. Partition Equal Subset Sum
  *
  * Q: https://leetcode.com/problems/partition-equal-subset-sum/
- * A: https://leetcode.com/problems/partition-equal-subset-sum/discuss/617275/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/partition-equal-subset-sum/discuss/617275/Kt-Js-Py3-Cpp-The-ART-of-Dynamic-Programming
  */
 
 // top-down
-let canPartition = (A, seen = new Set()) => {
-    let go = (T = Math.floor(total / 2), i = 0) => {
-        if (T < 0 || seen.has(`${T},${i}`))
+let canPartition = A => {
+    let total = _.sum(A);
+    if (total & 1)                                   // ❌ odd total cannot be evenly divided by 2
+        return false;
+    let target = Math.floor(total / 2);
+    let go = (i = 0, t = 0) => {
+        if (i == A.length || target < t)             // 🛑 base case: target not reached
             return false;
-        seen.add(`${T},${i}`);
-        if (i == A.length)
-            return T == 0; // target 🎯
-        return go(T - A[i], i + 1) || go(T, i + 1); // with xor without
-    }
-    let total = A.reduce((a, b) => a + b);
-    return total % 2 ? false : go();
+        if (t == target)                             // 🎯 target reached
+            return true;
+        return go(i + 1, t + A[i]) || go(i + 1, t);  // ✅ with xor 🚫 without A[i]
+    };
+    return go();
+};
+
+// memo
+let canPartition = (A, m = new Map()) => {
+    let total = _.sum(A);
+    if (total & 1)                                            // ❌ odd total cannot be evenly divided by 2
+        return false;
+    let target = Math.floor(total / 2);
+    let go = (i = 0, t = 0) => {
+        let key = `${i},${t}`;
+        if (m.has(key))                                       // 🤔 memo
+            return m.get(key);
+        if (i == A.length || target < t)                      // 🛑 base case: target not reached
+            m.set(key, false);
+        if (t == target)                                      // 🎯 target reached
+            m.set(key, true)
+        if (!m.has(key))
+            m.set(key, go(i + 1, t + A[i]) || go(i + 1, t));  // ✅ with xor 🚫 without A[i]
+        return m.get(key);
+    };
+    return go();
 };
 
 // bottom-up
 let canPartition = A => {
-    let total = A.reduce((a, b) => a + b);
-    if (total % 2)
+    let total = _.sum(A);
+    if (total & 1)                         // ❌ odd total cannot be evenly divided by 2
         return false;
-    let T = Math.floor(total / 2); // target 🎯
-    let dp = Array(T + 1).fill(0);
-    dp[0] = 1;
-    for (let x of A)
-        for (let sum = T; sum >= x; --sum) // potential sums to reach
-            if (dp[sum - x]) // if we can reach sum without x
-                dp[sum] = 1; // then we can reach sum with x
-    return dp[T]; // reached target sum? 🎯
+    let target = Math.floor(total / 2);
+    let dp = Array(target + 1).fill(0);    // 🤔 memo
+    dp[0] = 1;                             // 🛑 base case: we can reach target 0
+    for (let x of A)                       // 🤔 if we can reach t 🚫 without x, then we can reach t ✅ with x
+        for (let t = target; x <= t; --t)
+            if (dp[t - x])
+                dp[t] = 1;
+    return dp[target];                     // 🎯 target reached?
 };
