@@ -1,29 +1,33 @@
 /*
  * 1306. Jump Game III
- * 
+ *
  * Q: https://leetcode.com/problems/jump-game-iii/
- * A: https://leetcode.com/problems/jump-game-iii/discuss/464420/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/jump-game-iii/discuss/464420/Kt-Js-Py3-Cpp-BFS-%2B-DFS
  */
-/*
-let canReach = (A, i) => {
-    let ok = x => 0 <= x && x < A.length;
-    let q = [i]; let seen = new Set(q);
-    while (q.length > 0) {
-        let x = q[0]; q.shift();
-        if (A[x] == 0)
+
+// BFS
+let canReach = (A, start, seen = new Set()) => {
+    let q = [start];
+    while (q.length) {
+        let i = q.shift();
+        if (!A[i])
             return true;
-        let [l, r] = [x - A[x], x + A[x]];
-        if (ok(l) && !seen.has(l)) q.push(l), seen.add(l);
-        if (ok(r) && !seen.has(r)) q.push(r), seen.add(r);
+        for (let j of [i + A[i], i - A[i]])
+            if (0 <= j && j < A.length && !seen.has(j))
+                q.push(j), seen.add(j);
     }
     return false;
 };
-*/
-let canReach = (A, x, seen = new Set()) => {
-    let ok = x => 0 <= x && x < A.length && !seen.has(x);
-    if (A[x] == 0)
-        return true;
-    seen.add(x);
-    let [l, r] = [x - A[x], x + A[x]];
-    return (ok(l) && canReach(A, l, seen)) || (ok(r) && canReach(A, r, seen));
+
+// DFS
+let canReach = (A, start, seen = new Set()) => {
+    let go = (i = start) => {
+        if (i < 0 || A.length <= i || seen.has(i))
+            return false;
+        seen.add(i);
+        if (!A[i])
+            return true;
+        return go(i + A[i]) || go(i - A[i]);
+    };
+    return go();
 };
