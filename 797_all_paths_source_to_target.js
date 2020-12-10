@@ -2,20 +2,19 @@
  * 797. All Paths From Source to Target
  *
  * Q: https://leetcode.com/problems/all-paths-from-source-to-target/
- * A: https://leetcode.com/problems/all-paths-from-source-to-target/discuss/752917/Javascript-Python3-C%2B%2B-DFS-%2B-BT
+ * A: https://leetcode.com/problems/all-paths-from-source-to-target/discuss/752917/Kt-Js-Py3-Cpp-DFS-%2B-BT
  */
 
-let allPathsSourceTarget = (adj, paths = []) => {
-    let N = adj.length,
+let allPathsSourceTarget = (A, paths = []) => {
+    let N = A.length,
         s = 0,
         t = N - 1;
-    let go = (u = s, path = [ s ]) => {
+    let go = (path, u = path[path.length - 1]) => {
         if (u == t)
-            paths.push([...path]);     // 🎯 target t reached
+            paths.push([...path]);                  // 🎯 target t reached
         else
-            for (let v of adj[u])
-                go(v, path.concat(v)); // 🚀 explore edge u -> v with implicit ✅ 👀 forward-tracking + 🚫 👀 back-tracking
+            A[u].forEach(v => go(path.concat(v)));  // 🚀 explore edge u -> v with implicit ✅ 👀 forward-tracking + 🚫 👀 back-tracking
     };
-    go();
+    go([s]);
     return paths;
 };
