@@ -2,59 +2,75 @@
  * 1463. Cherry Pickup II
  *
  * Q: https://leetcode.com/problems/cherry-pickup-ii/
- * A: https://leetcode.com/problems/cherry-pickup-ii/discuss/660828/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/cherry-pickup-ii/discuss/660828/Kt-Js-Py3-Cpp-The-ART-of-Dynamic-Programming
  */
 
-// Top Down
+// top-down
 let cherryPickup = A => {
     let M = A.length,
         N = A[0].length;
-    let m = Array(M + 1).fill(-1);
-    let go = (i = 0, L = 0, R = N - 1, max = 0) => {
-        if (i == M)
+    let go = (k = 0, i = 0, j = N - 1) => {
+        if (k == M)
             return 0;
-        for (let p = -1; p <= 1; ++p) { // L column offset: left, same, right
-            let left = L + (0 < i ? p : 0);
-            if (!(0 <= left && left < N))
-                continue;
-            for (let q = -1; q <= 1; ++q) { // R column offset: left, same, right
-                let right = R + (0 < i ? q : 0);
-                if (!(0 <= right && right < N) || right <= left) // pruning condition: right <= left is always a sub-optimal solution
-                    continue;
-                let cand = A[i][left] + (left != right ? A[i][right] : 0); // maximum candidate
-                max = Math.max(max, cand + go(i + 1, left, right));
-            }
-        }
-        return max;
+        let best = 0;
+        for (let u of [i - 1, i, i + 1])
+            for (let v of [j - 1, j, j + 1])
+                if (!(u < 0 || v < 0 || u == M || v == N || v <= u))
+                    best = Math.max(best, go(k + 1, u, v));
+        return A[k][i] + A[k][j] + best;
     };
     return go();
 };
 
-// Top Down Memo
-let cherryPickup = A => {
+// top-down w/ memo
+let cherryPickup = (A, m = new Map()) => {
     let M = A.length,
         N = A[0].length;
-    let m = Array(M + 1).fill(-1);
-    let go = (i = 0, L = 0, R = N - 1) => {
-        let key = `${i},${L},${R}`;
-        if (m[key] > -1)
-            return m[key];
-        if (i == M)
-            return m[key] = 0;
-        m[key] = 0;
-        for (let p = -1; p <= 1; ++p) { // L column offset: left, same, right
-            let left = L + (0 < i ? p : 0);
-            if (!(0 <= left && left < N))
-                continue;
-            for (let q = -1; q <= 1; ++q) { // R column offset: left, same, right
-                let right = R + (0 < i ? q : 0);
-                if (!(0 <= right && right < N) || right <= left) // pruning condition: right <= left is always a sub-optimal solution
-                    continue;
-                let cand = A[i][left] + (left != right ? A[i][right] : 0); // maximum candidate
-                m[key] = Math.max(m[key], cand + go(i + 1, left, right));
-            }
-        }
-        return m[key];
+    let go = (k = 0, i = 0, j = N - 1) => {
+        let key = `${k},${i},${j}`;
+        if (m.has(key))
+            return m.get(key);
+        if (k == M)
+            return m.set(key, 0).get(key);
+        let best = 0;
+        for (let u of [i - 1, i, i + 1])
+            for (let v of [j - 1, j, j + 1])
+                if (!(u < 0 || v < 0 || u == M || v == N || v <= u))
+                    best = Math.max(best, go(k + 1, u, v));
+        return m.set(key, A[k][i] + A[k][j] + best).get(key);
     };
     return go();
+};
+
+// bottom-up
+let cherryPickup = (A, m = new Map()) => {
+    let M = A.length,
+        N = A[0].length;
+    let dp = [...Array(M + 1)].map(_ => [...Array(N)].map(_ => Array(N).fill(0)));
+    for (let k = M - 1; 0 <= k; --k)
+        for (let i = 0; i < N; ++i)
+            for (let j = 0; j < N; ++j)
+                for (let u of [i - 1, i, i + 1])
+                    for (let v of [j - 1, j, j + 1])
+                        if (!(u < 0 || v < 0 || u == M || v == N || v <= u))
+                            dp[k][i][j] = Math.max(dp[k][i][j], A[k][i] + A[k][j] + dp[k + 1][u][v]);
+    return dp[0][0][N - 1];
+};
+
+// bottom-up mem-opt
+let cherryPickup = (A, m = new Map()) => {
+    let M = A.length,
+        N = A[0].length;
+    let pre = [...Array(N)].map(_ => Array(N).fill(0));
+    for (let k = M - 1; 0 <= k; --k) {
+        let cur = [...Array(N)].map(_ => Array(N).fill(0));
+        for (let i = 0; i < N; ++i)
+            for (let j = 0; j < N; ++j)
+                for (let u of [i - 1, i, i + 1])
+                    for (let v of [j - 1, j, j + 1])
+                        if (!(u < 0 || v < 0 || u == M || v == N || v <= u))
+                            cur[i][j] = Math.max(cur[i][j], A[k][i] + A[k][j] + pre[u][v]);
+        [pre, cur] = [cur, pre];
+    }
+    return pre[0][N - 1];
 };
