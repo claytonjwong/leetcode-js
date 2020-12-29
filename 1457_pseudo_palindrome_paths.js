@@ -7,12 +7,13 @@
 
 let pseudoPalindromicPaths = (root, m = new Map(), odd = 0, paths = 0) => {
     let go = root => {
-        m.set(root.val,  1 + (m.get(root.val) || 0)), odd += m.get(root.val) & 1 ? 1 : -1;
+        let x = root.val;
+        m.set(x,  1 + (m.get(x) || 0)), odd += m.get(x) & 1 ? 1 : -1;
         if (!root.left && !root.right)
             paths += odd <= 1;
         if (root.left)  go(root.left);
         if (root.right) go(root.right);
-        m.set(root.val, -1 + (m.get(root.val) || 0)), odd += m.get(root.val) & 1 ? 1 : -1;
+        m.set(x, -1 + (m.get(x) || 0)), odd += m.get(x) & 1 ? 1 : -1;
     };
     go(root);
     return paths;
