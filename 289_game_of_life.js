@@ -2,34 +2,28 @@
  * 289. Game of Life
  *
  * Q: https://leetcode.com/problems/game-of-life/
- * A: https://leetcode.com/problems/game-of-life/discuss/607337/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/game-of-life/discuss/607337/Kt-Js-Py3-Cpp-In-Place-LIVE-or-DIE
  */
 
-let gameOfLife = B => {
-    let M = B.length,
-        N = M ? B[0].length : 0;
-    let A = [...Array(M)].map(row => Array(N).fill(0)); // case 1 and case 3: dead by default ❌
-    B.forEach((row, i) =>
-        row.forEach((col, j) => {
-            let adj = 0;
-            for (let dir of [[-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1]]) {
-                let u = i + dir[0],
-                    v = j + dir[1];
-                if (u < 0 || u == M || v < 0 || v == N)
-                    continue;
-                adj += B[u][v];
-            }
-            if ((B[i][j] && (adj == 2 || adj == 3)) || (!B[i][j] && adj == 3))
-                A[i][j] = 1; // case 2 and case 4: live on ✅
-        })
-    );
-    B.forEach((row, i) => row.forEach((col, j) => B[i][j] = A[i][j]));
+let gameOfLife = A => {
+    let M = A.length,
+        N = A[0].length;
+    for (let i = 0; i < M; ++i) {
+        for (let j = 0; j < N; ++j) {
+            let k = 0;
+            for (let [u, v] of [[i - 1, j], [i - 1, j + 1], [i, j + 1], [i + 1, j + 1], [i + 1, j], [i + 1, j - 1], [i, j - 1], [i - 1, j - 1]])
+                if (0 <= u && u < M && 0 <= v && v < N && 0 < A[u][v])
+                    ++k;
+            if (0 < A[i][j])
+                A[i][j] = k == 2 || k == 3 ? k : 1;              // 🙂 live cells must have 2 or 3 adjacent live cells to stay alive, otherwise k = 1 (special case)
+            else
+                A[i][j] = -k;                                    // 👻 dead cells have -k adjacent live cells
+        }
+    }
+    for (let i = 0; i < M; ++i)
+        for (let j = 0; j < N; ++j)
+            if (0 < A[i][j])
+                A[i][j] = Number(A[i][j] == 2 || A[i][j] == 3);  // 🙂 live cells must have 2 or 3 adjacent live cells to stay alive
+            else
+                A[i][j] = Number(A[i][j] == -3);                 // 👻 dead cells become alive with 3 adjacent live cells
 };
-let B = [
-    [0,1,0],
-    [0,0,1],
-    [1,1,1],
-    [0,0,0],
-];
-gameOfLife(B);
-B.forEach(row => console.log(...row));
