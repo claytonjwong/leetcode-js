@@ -2,33 +2,16 @@
  * 1379. Find a Corresponding Node of a Binary Tree in a Clone of That Tree
  *
  * Q: https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree/
- * A: https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree/discuss/537655/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree/discuss/537655/Kt-Js-Py3-Cpp-Traverse-A%2BB-Simultaneously
  */
 
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-
-/**
- * @param {TreeNode} original
- * @param {TreeNode} cloned
- * @param {TreeNode} target
- * @return {TreeNode}
- */
-
-let getTargetCopy = (a, b, c, ans) => {
-    let go = (a, b, c) => {
-        if (a == c)
-            ans = b;
-        if (a.left)
-            go(a.left, b.left, c);
-        if (a.right)
-            go(a.right, b.right, c);
+let getTargetCopy = (A, B, T) => {
+    let go = (a = A, b = B) => {
+        if (a == T)
+            return b;
+        let L = a.left  ? go(a.left,  b.left)  : null,
+            R = a.right ? go(a.right, b.right) : null;
+        return L ? L : R;
     };
-    go(a, b, c);
-    return ans;
+    return go();
 };
