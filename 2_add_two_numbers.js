@@ -2,25 +2,20 @@
  * 2. Add Two Numbers
  *
  * Q: https://leetcode.com/problems/add-two-numbers/
- * A: https://leetcode.com/problems/add-two-numbers/discuss/1093/a-few-solutions...
+ * A: https://leetcode.com/problems/add-two-numbers/discuss/1093/Kt-Js-Py3-Cpp-Concise-solutions
  */
 
- /**
- * @param {ListNode} l1
- * @param {ListNode} l2
- * @return {ListNode}
- */
-let addTwoNumbers = (a, b) => {
-    let ans = new ListNode(), head = ans, carry = 0;
-    for (;;) {
-        head.val = (a ? a.val : 0) + (b ? b.val : 0) + carry;
-        carry = Math.floor(head.val / 10);
-        head.val %= 10;
-        a = a ? a.next : null;
-        b = b ? b.next : null;
-        if (!a && !b && !carry)
-            break;
-        head = head.next = new ListNode();
+let addTwoNumbers = (A, B, carry = false) => {
+    let ans = new ListNode(-1),
+        cur = ans;
+    while (A || B || carry) {
+        let a = A ? A.val : 0,
+            b = B ? B.val : 0,
+            c = a + b + Number(carry);
+        carry = 10 <= c, c %= 10;
+        cur.next = new ListNode(c), cur = cur.next;
+        A = A?.next;
+        B = B?.next;
     }
-    return ans;
+    return ans.next;
 };
