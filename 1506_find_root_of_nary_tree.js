@@ -2,23 +2,23 @@
  * 1506. Find Root of N-Ary Tree
  *
  * Q: https://leetcode.com/problems/find-root-of-n-ary-tree/
- * A: https://leetcode.com/problems/find-root-of-n-ary-tree/discuss/729168/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/find-root-of-n-ary-tree/discuss/729168/Kt-Js-Py3-Cpp-O(N)-%2B-O(1)-memory-solutions
  */
 
 // naive
-let findRoot = (tree, children = new Set()) => {
-    for (let node of tree)
-        for (let child of node.children)
+let findRoot = (A, children = new Set()) => {
+    for (let it of A)
+        for (let child of it.children)
             children.add(child);
-    return tree.filter(node => !children.has(node))[0]; // 🎯 root node is the only node which is *not* a child
+    return A.filter(it => !children.has(it))[0];
 };
 
 // memory optimized
-let findRoot = (tree, x = 0) => {
-    for (let node of tree) {
-        x ^= node.val; // 🎯 root node is only xor'ed once here, 🚫 child nodes are xor'ed once here and once below
-        for (let child of node.children)
-            x ^= child.val; // 🚫 child nodes are xor'ed a second time here
+let findRoot = (A, x = 0) => {
+    for (let it of A) {
+        x ^= it.val;
+        for (let child of it.children)
+            x ^= child.val;
     }
-    return tree.filter(node => node.val == x)[0];
+    return A.filter(it => x == it.val)[0];
 };
